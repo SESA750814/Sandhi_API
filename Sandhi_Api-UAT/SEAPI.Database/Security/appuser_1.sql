@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [appuser]
+    WITH PASSWORD = N'Lz@{buX{lg5runU{dzwbxmPxmsFT7_&#$!~<niwu{zhNdwn|', SID = 0xC50E41EAA11CF2429F10652F37841D9D, DEFAULT_LANGUAGE = [us_english], CHECK_POLICY = OFF;
+

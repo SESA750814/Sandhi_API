@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[SE_UPLOAD_ERRORS] (
+    [Id]                VARCHAR (MAX) NOT NULL,
+    [FILE_NAME]         VARCHAR (100) NOT NULL,
+    [ERROR_INFORMATION] VARCHAR (100) NOT NULL,
+    [TIMESTAMP]         DATETIME      NOT NULL
+);
+

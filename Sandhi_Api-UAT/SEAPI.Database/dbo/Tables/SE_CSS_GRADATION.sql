@@ -1,0 +1,26 @@
+﻿CREATE TABLE [dbo].[SE_CSS_GRADATION] (
+    [Id]                   BIGINT        IDENTITY (1, 1) NOT NULL,
+    [CSS_ID]               BIGINT        NOT NULL,
+    [VALID_FROM]           DATETIME      NOT NULL,
+    [VALID_TILL]           DATETIME      NOT NULL,
+    [SRS_GRADE]            VARCHAR (100) NOT NULL,
+    [NSS_GRADE]            VARCHAR (100) NOT NULL,
+    [CSR_GRADE]            VARCHAR (100) NOT NULL,
+    [WOR_GRADE]            VARCHAR (100) NOT NULL,
+    [MTTR_GRADE]           VARCHAR (100) NOT NULL,
+    [PMC_GRADE]            VARCHAR (100) NOT NULL,
+    [DFR_HBN_GRADE]        VARCHAR (100) NOT NULL,
+    [DFR_PPI_GRADE]        VARCHAR (100) NOT NULL,
+    [NPF_GRADE]            VARCHAR (100) NOT NULL,
+    [ATTR_GRADE]           VARCHAR (100) NOT NULL,
+    [FRS_GRADE]            VARCHAR (100) NOT NULL,
+    [LEAD_GRADE]           VARCHAR (100) NOT NULL,
+    [IB_GRADE]             VARCHAR (100) NOT NULL,
+    [FINAL_GRADE]          VARCHAR (100) NOT NULL,
+    [Updated_User]         VARCHAR (100) NOT NULL,
+    [Updated_Date]         DATETIME      NOT NULL,
+    [GradationEligibility] VARCHAR (100) NULL,
+    CONSTRAINT [PK_SE_CSS_GRADATION] PRIMARY KEY NONCLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_GRADATION_CSS] FOREIGN KEY ([CSS_ID]) REFERENCES [dbo].[SE_CSS_MASTER] ([Id])
+);
+

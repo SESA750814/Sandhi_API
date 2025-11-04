@@ -1,0 +1,23 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ],
+  "ConnectionStrings": {
+    "SqlConnectionString": "server=office-pc;Database=Amirta;persist security info=True;user id=sa;password=p@ssword123;multipleactiveresultsets=True"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning"
+    }
+  },
+  "ExcelImport": {
+    "Folder": "/Upload"
+
+  }
+}

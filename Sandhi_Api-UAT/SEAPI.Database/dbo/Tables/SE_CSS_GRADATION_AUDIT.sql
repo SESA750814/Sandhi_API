@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[SE_CSS_GRADATION_AUDIT] (
+    [AuditId]               BIGINT        IDENTITY (1, 1) NOT NULL,
+    [Id]                    BIGINT        NOT NULL,
+    [CSS_ID]                BIGINT        NOT NULL,
+    [VALID_FROM]            DATETIME      NOT NULL,
+    [VALID_TILL]            DATETIME      NOT NULL,
+    [SRS_GRADE]             VARCHAR (100) NOT NULL,
+    [NSS_GRADE]             VARCHAR (100) NOT NULL,
+    [CSR_GRADE]             VARCHAR (100) NOT NULL,
+    [WOR_GRADE]             VARCHAR (100) NOT NULL,
+    [MTTR_GRADE]            VARCHAR (100) NOT NULL,
+    [PMC_GRADE]             VARCHAR (100) NOT NULL,
+    [DFR_HBN_GRADE]         VARCHAR (100) NOT NULL,
+    [DFR_PPI_GRADE]         VARCHAR (100) NOT NULL,
+    [NPF_GRADE]             VARCHAR (100) NOT NULL,
+    [ATTR_GRADE]            VARCHAR (100) NOT NULL,
+    [FRS_GRADE]             VARCHAR (100) NOT NULL,
+    [LEAD_GRADE]            VARCHAR (100) NOT NULL,
+    [IB_GRADE]              VARCHAR (100) NOT NULL,
+    [FINAL_GRADE]           VARCHAR (100) NOT NULL,
+    [Updated_User]          VARCHAR (100) NOT NULL,
+    [Updated_Date]          DATETIME      NOT NULL,
+    [GradationEligibility]  VARCHAR (100) NULL,
+    [Audit_CreatedDateTime] DATETIME      NOT NULL,
+    CONSTRAINT [PK_SE_CSS_GRADATION_AUDIT] PRIMARY KEY NONCLUSTERED ([AuditId] ASC)
+);
+

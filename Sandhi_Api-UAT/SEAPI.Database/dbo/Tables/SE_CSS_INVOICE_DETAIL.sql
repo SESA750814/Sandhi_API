@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[SE_CSS_INVOICE_DETAIL] (
+    [Id]                BIGINT          IDENTITY (1, 1) NOT NULL,
+    [INV_ID]            BIGINT          NOT NULL,
+    [AMC_WARRANTY_FLAG] VARCHAR (100)   NOT NULL,
+    [INV_AMT]           NUMERIC (18, 2) NOT NULL,
+    [Updated_User]      VARCHAR (100)   NOT NULL,
+    [Updated_Date]      DATETIME        NOT NULL,
+    CONSTRAINT [PK_SE_CSS_INVOICE_DETAIL] PRIMARY KEY NONCLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_INVOICE_DETAIL] FOREIGN KEY ([INV_ID]) REFERENCES [dbo].[SE_CSS_INVOICE] ([Id])
+);
+

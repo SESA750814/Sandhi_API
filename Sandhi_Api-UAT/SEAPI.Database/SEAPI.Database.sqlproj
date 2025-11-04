@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>SEAPI.Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{d68d77ea-3e97-4245-b4f9-0f4b60f1a796}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>SEAPI.Database</RootNamespace>
+    <AssemblyName>SEAPI.Database</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="Security\" />
+    <Folder Include="dbo\Functions\" />
+    <Folder Include="dbo\Stored Procedures\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\NPFHBNKPIHistories.sql" />
+    <Build Include="dbo\Tables\PO_Import.sql" />
+    <Build Include="dbo\Tables\tempCssList.sql" />
+    <Build Include="dbo\Tables\SE_CSS_APPROVED_DATA.sql" />
+    <Build Include="dbo\Tables\PreventiveMaintainanceComplianceCoolingKPI.sql" />
+    <Build Include="dbo\Tables\HBN_Product_category_List.sql" />
+    <Build Include="dbo\Tables\PreventiveMaintainanceComplianceCoolingKPIHistories.sql" />
+    <Build Include="dbo\Tables\PSI_Distance_Slab.sql" />
+    <Build Include="dbo\Tables\PSI_Product_Category_old.sql" />
+    <Build Include="dbo\Tables\PSI_Rate_Card.sql" />
+    <Build Include="dbo\Tables\Cooling_DS_Sep.sql" />
+    <Build Include="dbo\Tables\Cooling_DS_Aug_Sep.sql" />
+    <Build Include="dbo\Tables\PSI_RepeatCalls.sql" />
+    <Build Include="dbo\Tables\ZIP_COORDINATES.sql" />
+    <Build Include="dbo\Tables\Cooling_DS_Aug_Sep_Oct.sql" />
+    <Build Include="dbo\Tables\PSI_Work_Order.sql" />
+    <Build Include="dbo\Tables\RAW_DUMP_Expense_1.sql" />
+    <Build Include="dbo\Tables\RAW_DUMP_Cooling_Expense_1.sql" />
+    <Build Include="dbo\Tables\temp_issuefix.sql" />
+    <Build Include="dbo\Tables\Cooling_Product_Category_list_Source.sql" />
+    <Build Include="dbo\Tables\temp_99.sql" />
+    <Build Include="dbo\Tables\SafetyRatingScoreKPI.sql" />
+    <Build Include="dbo\Tables\Cooling Mileage Dump-Aug_21_Sheet1.sql" />
+    <Build Include="dbo\Tables\SafetyRatingScoreKPIHistories.sql" />
+    <Build Include="dbo\Tables\SE_CSS_GRADATION.sql" />
+    <Build Include="dbo\Tables\WorkOrderReport.sql" />
+    <Build Include="dbo\Tables\SE_CSS_GRADATION_DETAIL.sql" />
+    <Build Include="dbo\Tables\WorkOrderDiscrepencyReport.sql" />
+    <Build Include="dbo\Tables\SE_CSS_INVOICE.sql" />
+    <Build Include="dbo\Tables\SE_CSS_INVOICE_DETAIL.sql" />
+    <Build Include="dbo\Tables\SE_CSS_Invoice_Status.sql" />
+    <Build Include="dbo\Tables\SE_CSS_MASTER.sql" />
+    <Build Include="dbo\Tables\SE_CSS_PURCHASE_ORDER.sql" />
+    <Build Include="dbo\Tables\WorkOrderSemiDraft.sql" />
+    <Build Include="dbo\Tables\SE_CurrentStatus.sql" />
+    <Build Include="dbo\Tables\SE_GRADATION_MASTER.sql" />
+    <Build Include="dbo\Tables\SE_Notification.sql" />
+    <Build Include="dbo\Tables\SE_Work_Order.sql" />
+    <Build Include="dbo\Tables\SE_Work_Order_Status.sql" />
+    <Build Include="dbo\Tables\ThresHoldInputFile.sql" />
+    <Build Include="dbo\Tables\PSI_Product_category_List_Source.sql" />
+    <Build Include="dbo\Tables\Work order_Response.sql" />
+    <Build Include="dbo\Tables\Cooling_Derived_Feb.sql" />
+    <Build Include="dbo\Tables\HBN_Product_category_List_Backup.sql" />
+    <Build Include="dbo\Tables\Month_Year.sql" />
+    <Build Include="dbo\Tables\HBN_Product_category_List_old.sql" />
+    <Build Include="dbo\Tables\PSI_Product_Category_Backup.sql" />
+    <Build Include="dbo\Tables\Work_order_MTTRv_KPIHistories.sql" />
+    <Build Include="dbo\Tables\Cooling_Logs.sql" />
+    <Build Include="dbo\Tables\Cooling_Product_Category_list_Backup.sql" />
+    <Build Include="dbo\Tables\Arrived_HBN_Sep.sql" />
+    <Build Include="dbo\Tables\AspNetRoleClaims.sql" />
+    <Build Include="dbo\Tables\Work_Order_Response_KPIHistories.sql" />
+    <Build Include="dbo\Tables\AspNetRoles.sql" />
+    <Build Include="dbo\Tables\SafetyRatingScore.sql" />
+    <Build Include="dbo\Tables\CustomerSatisfactionScoreNSS.sql" />
+    <Build Include="dbo\Tables\AspNetUserClaims.sql" />
+    <Build Include="dbo\Tables\CustomerSurveyResponseRate.sql" />
+    <Build Include="dbo\Tables\Work_Order_Response.sql" />
+    <Build Include="dbo\Tables\ErrorLogs.sql" />
+    <Build Include="dbo\Tables\AspNetUserLogins.sql" />
+    <Build Include="dbo\Tables\Work_order_MTTRv.sql" />
+    <Build Include="dbo\Tables\aspnetuser_bk_10092022.sql" />
+    <Build Include="dbo\Tables\PreventiveMaintainanceComplianceCooling.sql" />
+    <Build Include="dbo\Tables\hbn_product_10092022.sql" />
+    <Build Include="dbo\Tables\AspNetUserRoles.sql" />
+    <Build Include="dbo\Tables\css-id-53-WO-08833118-csS_Attachment.sql" />
+    <Build Include="dbo\Tables\DefectiveReturnHBN.sql" />
+    <Build Include="dbo\Tables\psi_product_10092022.sql" />
+    <Build Include="dbo\Tables\DefectiveReturnRatePPAndI.sql" />
+    <Build Include="dbo\Tables\colling_product_10092022.sql" />
+    <Build Include="dbo\Tables\AspNetUsers.sql" />
+    <Build Include="dbo\Tables\NPFHBN.sql" />
+    <Build Include="dbo\Tables\SPLoadLogs.sql" />
+    <Build Include="dbo\Tables\temp_SE_CSS_Master.sql" />
+    <Build Include="dbo\Tables\AspNetUserTokens.sql" />
+    <Build Include="dbo\Tables\TIMELOG.sql" />
+    <Build Include="dbo\Tables\Temp_aspnetuser.sql" />
+    <Build Include="dbo\Tables\AttritionKPI.sql" />
+    <Build Include="dbo\Tables\AttritionKPIHistories.sql" />
+    <Build Include="dbo\Tables\Cooling_Call_Type_Derivation.sql" />
+    <Build Include="dbo\Tables\Cooling_Description_Master.sql" />
+    <Build Include="dbo\Tables\Cooling_Distance_Slab.sql" />
+    <Build Include="dbo\Tables\Cooling_Expense.sql" />
+    <Build Include="dbo\Tables\Cooling_Rate_Card.sql" />
+    <Build Include="dbo\Tables\Cooling_RAW_DUMP_Expense_1.sql" />
+    <Build Include="dbo\Tables\Purchase_Order_Import.sql" />
+    <Build Include="dbo\Tables\Cooling_RAW_DUMP_Expense_2.sql" />
+    <Build Include="dbo\Tables\Cooling_Work_Order.sql" />
+    <Build Include="dbo\Tables\Product Master-2022_Cooling.sql" />
+    <Build Include="dbo\Tables\SE_CSS_Approved_Data_Back_20220929.sql" />
+    <Build Include="dbo\Tables\Product Master-2022_HBN.sql" />
+    <Build Include="dbo\Tables\CustomerSatisfactionScoreNSS_KPI.sql" />
+    <Build Include="dbo\Tables\Find_Month.sql" />
+    <Build Include="dbo\Tables\SE_CSS_APPROVED_WORKORDER_Back_20220929.sql" />
+    <Build Include="dbo\Tables\Feb22Cooling_Issues.sql" />
+    <Build Include="dbo\Tables\Product Master-2022_PSI.sql" />
+    <Build Include="dbo\Tables\Find_Year.sql" />
+    <Build Include="dbo\Tables\HBN_Work_Order.sql" />
+    <Build Include="dbo\Tables\se_css_invoice_Back_20220929.sql" />
+    <Build Include="dbo\Tables\CustomerSatisfactionScoreNSSKPI.sql" />
+    <Build Include="dbo\Tables\SE_CSS_INVOICE_DETAIL_Back_20220929.sql" />
+    <Build Include="dbo\Tables\CustomerSatisfactionScoreNSSKPIHistories.sql" />
+    <Build Include="dbo\Tables\se_css_invoice_Back_20220929_.sql" />
+    <Build Include="dbo\Tables\SE_CSS_INVOICE_DETAIL_Back_20220929_.sql" />
+    <Build Include="dbo\Tables\RAW_DUMP_Expense.sql" />
+    <Build Include="dbo\Tables\SE_CSS_APPROVED_WORKORDER.sql" />
+    <Build Include="dbo\Tables\RAW_DUMP_Cooling_Expense.sql" />
+    <Build Include="dbo\Tables\CustomerSurveyResponseRateKPI.sql" />
+    <Build Include="dbo\Tables\HBN_RAW_DUMP.sql" />
+    <Build Include="dbo\Tables\POImportHBN-August-2021.sql" />
+    <Build Include="dbo\Tables\PSI_RAW_DUMP.sql" />
+    <Build Include="dbo\Tables\CSS_List_Payout_Slab_CSS_Manager_Details.sql" />
+    <Build Include="dbo\Tables\CustomerSurveyResponseRateKPIHistories.sql" />
+    <Build Include="dbo\Tables\POImportPPI-August-2021.sql" />
+    <Build Include="dbo\Tables\Cooling_RAW_DUMP.sql" />
+    <Build Include="dbo\Tables\Dump_Month.sql" />
+    <Build Include="dbo\Tables\Dump_Year.sql" />
+    <Build Include="dbo\Tables\Cooling_Product_Category_list.sql" />
+    <Build Include="dbo\Tables\DefectiveReturnHBNKPI.sql" />
+    <Build Include="dbo\Tables\HBN_RepeatCalls.sql" />
+    <Build Include="dbo\Tables\cssmaster_Back_20221011.sql" />
+    <Build Include="dbo\Tables\PSI_Product_Category_backup_14112022.sql" />
+    <Build Include="dbo\Tables\DefectiveReturnHBNKPIHistories.sql" />
+    <Build Include="dbo\Tables\Product_Master_format_Updated_Cooling_.sql" />
+    <Build Include="dbo\Tables\Product_Master_format_Updated_HBN_.sql" />
+    <Build Include="dbo\Tables\Product_Master_format_Updated_PSI_.sql" />
+    <Build Include="dbo\Tables\DefectiveReturnRatePPAndIKPI.sql" />
+    <Build Include="dbo\Tables\PSI_Product_Category.sql" />
+    <Build Include="dbo\Tables\Cooling_Product_Category_list_backup_12102022.sql" />
+    <Build Include="dbo\Tables\HBN_Product_category_List_backup_12102022.sql" />
+    <Build Include="dbo\Tables\PSI_Rate_Card_List.sql" />
+    <Build Include="dbo\Tables\DefectiveReturnRatePPAndIKPIHistories.sql" />
+    <Build Include="dbo\Tables\PSI_Product_Category_backup_12102022.sql" />
+    <Build Include="dbo\Tables\HBN_Rate_Card_List.sql" />
+    <Build Include="dbo\Tables\HBN_Product_category_List_Source.sql" />
+    <Build Include="dbo\Tables\Cooling_Rate_Card_List.sql" />
+    <Build Include="dbo\Tables\FSRCompetencyKPI.sql" />
+    <Build Include="dbo\Tables\Work_order_MTTRv_KPI.sql" />
+    <Build Include="dbo\Tables\FSRCompetencyKPIHistories.sql" />
+    <Build Include="dbo\Tables\Work_Order_Response_KPI.sql" />
+    <Build Include="dbo\Tables\Gradation_KPI_Metrics.sql" />
+    <Build Include="dbo\Tables\Cooling_RAW_DUMP_Expense.sql" />
+    <Build Include="dbo\Tables\GradationHolidays.sql" />
+    <Build Include="dbo\Tables\Grade.sql" />
+    <Build Include="dbo\Tables\HBN_Distance_Slab.sql" />
+    <Build Include="dbo\Tables\HBN_Rate_Card.sql" />
+    <Build Include="dbo\Tables\Attrition.sql" />
+    <Build Include="dbo\Tables\SE_Work_Order_BeforeRawDump_Data_Delete_15_04_2025.sql" />
+    <Build Include="dbo\Tables\FSRCompetency.sql" />
+    <Build Include="dbo\Tables\SE_Work_Order_Status_BeforeRawDump_Data_Delete_15_04_2025.sql" />
+    <Build Include="dbo\Tables\LeadGeneration.sql" />
+    <Build Include="dbo\Tables\IBTracking.sql" />
+    <Build Include="dbo\Tables\IBTrackingKPI.sql" />
+    <Build Include="dbo\Tables\ThresHold.sql" />
+    <Build Include="dbo\Tables\HBN_Repeat_Calls.sql" />
+    <Build Include="dbo\Tables\SE_UPLOAD.sql" />
+    <Build Include="dbo\Tables\IBTrackingKPIHistories.sql" />
+    <Build Include="dbo\Tables\SE_UPLOAD_ERRORS.sql" />
+    <Build Include="dbo\Tables\RAW_DUMP_Cooling_Expense_3.sql" />
+    <Build Include="dbo\Tables\AspNetUsers_Backup.sql" />
+    <Build Include="dbo\Tables\LeadGenerationKPI.sql" />
+    <Build Include="dbo\Tables\SE_CSS_GRADATION_AUDIT.sql" />
+    <Build Include="dbo\Tables\LeadGenerationKPIHistories.sql" />
+    <Build Include="dbo\Tables\SE_CSS_GRADATION_DETAIL_AUDIT.sql" />
+    <Build Include="dbo\Tables\NPFHBNKPI.sql" />
+    <Build Include="Security\user.sql" />
+    <Build Include="Security\appuser.sql" />
+    <Build Include="Security\appuser_1.sql" />
+    <Build Include="Security\appuser1.sql" />
+    <Build Include="Security\appuser1_1.sql" />
+    <Build Include="Security\admin.sql" />
+    <Build Include="Security\admin_1.sql" />
+    <Build Include="Security\IIS APPPOOL_SandhiUAT.sql" />
+    <Build Include="Security\IIS APPPOOL_SandhiUAT_1.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="dbo\Functions\fn_GetDaysAndHours.sql" />
+    <Build Include="dbo\Functions\fn_GetDaysAndHoursAndMinutes.sql" />
+    <Build Include="dbo\Functions\fn_GetEncryptValue.sql" />
+    <Build Include="dbo\Functions\fn_GetExcludeWeekEndAndHolidayMinutes.sql" />
+    <Build Include="dbo\Functions\fn_GetHoursAndMinutes.sql" />
+    <Build Include="dbo\Functions\fn_GetMinutes.sql" />
+    <Build Include="dbo\Functions\fn_GetMinutesToBusinessHoursAndMinutes.sql" />
+    <Build Include="dbo\Functions\fn_GetWeekEndAndHolidayCount.sql" />
+    <Build Include="dbo\Functions\fn_GetWeekEndAndHolidayMinutes.sql" />
+    <Build Include="dbo\Functions\fn_MinutesToDaysAndHours.sql" />
+    <Build Include="dbo\Functions\fn_MinutesToDaysAndHoursAndMinutes.sql" />
+    <Build Include="dbo\Functions\fn_MinutesToHoursAndMinutes.sql" />
+    <Build Include="dbo\Functions\RemoveCharSpecialSymbolValue.sql" />
+    <Build Include="dbo\Functions\fn_SecondsToHoursAndMinutesAndSeconds.sql" />
+    <Build Include="dbo\Functions\SplitString.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateDefectiveReturnRatePPAndIKPI.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateFSRCompetencyKPI.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateGradationDetails_Job.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateIBTrackingKPI.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateLeadGenerationKPI.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateNPFHBNKPI.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdatePreventiveMaintainanceComplianceCoolingKPI.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateSafetyRatingScoreKPI.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateThresHoldInputFile.sql" />
+    <Build Include="dbo\Stored Procedures\usp_RESETDATA.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ApprovedData.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateWorkOrderMTTRvKPI.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateWorkOrderResponseKPI.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CSSRaiseInvoice.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CurrentStatus.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ImportMainData.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InvoiceStatusUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CSSUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LinkInvoicePurchaseOrder.sql" />
+    <Build Include="dbo\Stored Procedures\sp_GetUsers.sql" />
+    <Build Include="dbo\Stored Procedures\usp_SEPurchaseOrderImport.sql" />
+    <Build Include="dbo\Stored Procedures\sp_CREATEUSER_Central_user.sql" />
+    <Build Include="dbo\Stored Procedures\usp_WorkOrderAutoApproval.sql" />
+    <Build Include="dbo\Stored Procedures\usp_WorkOrderAutoApprovalReminder.sql" />
+    <Build Include="dbo\Stored Procedures\usp_WorkOrderStatusUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\Error_Log_Notification.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_GetCssMonthInvoiceReport.sql" />
+    <Build Include="dbo\Stored Procedures\SE_SP_SEDumpFilter_To_HBNandPSI.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_GetFinanceValidationReport.sql" />
+    <Build Include="dbo\Stored Procedures\SP_All_Start_Process_Rate_Mapping.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_GetNoDueCertificateReport.sql" />
+    <Build Include="dbo\Stored Procedures\SP_Cooling_Insert_Expense.sql" />
+    <Build Include="dbo\Stored Procedures\Worker_Service_SanityCheck_UploadFiles.sql" />
+    <Build Include="dbo\Stored Procedures\usp_WorkOrderAutoApprovalReminders.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DashboardGradation.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DashboardPaymentCount.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_GetWorkOrderDiscrepencyReport.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DashboardPaymentValue.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_GetWorkOrderCountReport.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_AlterGradationScript.sql" />
+    <Build Include="dbo\Stored Procedures\SP_Existing_Month_Validation_Aganist_new_Dump.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdatePercentage.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_GetWorkOrderSemiDraftReport.sql" />
+    <Build Include="dbo\Stored Procedures\SP_Cooling_Insert_Transaction.sql" />
+    <Build Include="dbo\Stored Procedures\SP_HBN_Insert_Transaction.sql" />
+    <Build Include="dbo\Stored Procedures\SP_PSI_Insert_Transaction.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DashboardPurchaseOrder.sql" />
+    <Build Include="dbo\Stored Procedures\usp_PurchaseOrderByBusinessUnit.sql" />
+    <Build Include="dbo\Stored Procedures\SP_Dump_Column_Name_Change.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_PostErrorLogs.sql" />
+    <Build Include="dbo\Stored Procedures\SP_Delete_Tables_upload_CSS_Master.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_PostSPLoadLogs.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetPreviousMonthWOCount.sql" />
+    <Build Include="dbo\Stored Procedures\SP_Get_Results.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CurrentStatus_backup_08042025.sql" />
+    <Build Include="dbo\Stored Procedures\SP_Cooling_Rate_Expense_Mapping_23Dec2024.sql" />
+    <Build Include="dbo\Stored Procedures\SP_RESETDEFAULTPASSWORD.sql" />
+    <Build Include="dbo\Stored Procedures\INSERTCOOLINGPRODUCT.sql" />
+    <Build Include="dbo\Stored Procedures\INSERTHBNPRODUCT.sql" />
+    <Build Include="dbo\Stored Procedures\INSERTPSIPRODUCT.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InvoicePaid.sql" />
+    <Build Include="dbo\Stored Procedures\SP_Cooling_Rate_Expense_Mapping.sql" />
+    <Build Include="dbo\Stored Procedures\SP_HBN_Repeat_Call_Rate_Mapping_25Dec2024.sql" />
+    <Build Include="dbo\Stored Procedures\SP_INSERT_PSI_RATE_CARD.sql" />
+    <Build Include="dbo\Stored Procedures\SP_INSERT_HBN_RATE_CARD.sql" />
+    <Build Include="dbo\Stored Procedures\SP_INSERT_COOLING_RATE_CARD.sql" />
+    <Build Include="dbo\Stored Procedures\Clear_Transaction.sql" />
+    <Build Include="dbo\Stored Procedures\SP_HBN_Repeat_Call_Mapping_26042022.sql" />
+    <Build Include="dbo\Stored Procedures\SP_Cooling_Rate_Expense_Mapping_Before_fix.sql" />
+    <Build Include="dbo\Stored Procedures\SP_Delete_SE_WorkOrder_ByMonth.sql" />
+    <Build Include="dbo\Stored Procedures\SP_Sanitycheck.sql" />
+    <Build Include="dbo\Stored Procedures\sp_CREATEUSER.sql" />
+    <Build Include="dbo\Stored Procedures\SP_HBN_Rate_Mapping.sql" />
+    <Build Include="dbo\Stored Procedures\SP_HBN_Repeat_Call_Rate_Mapping.sql" />
+    <Build Include="dbo\Stored Procedures\SP_Insert_CSS_Master.sql" />
+    <Build Include="dbo\Stored Procedures\SP_PSI_Rate_Mapping_old.sql" />
+    <Build Include="dbo\Stored Procedures\sp_InsertUpload.sql" />
+    <Build Include="dbo\Stored Procedures\SP_PSI_Repeat_Call_Rate_Mapping.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_InsertCssCodeGrade.sql" />
+    <Build Include="dbo\Stored Procedures\SP_Delete_SE_WorkOrder.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateAttritionKPI.sql" />
+    <Build Include="dbo\Stored Procedures\SP_HBN_Repeat_Call_Fix.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateCSSInvoiceAmount.sql" />
+    <Build Include="dbo\Stored Procedures\sp_CreateCSSUser.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateCustomerSatisfactionScoreNSSKPI.sql" />
+    <Build Include="dbo\Stored Procedures\SP_PSI_Rate_Mapping.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateCustomerSurveyResponseRateKPI.sql" />
+    <Build Include="dbo\Stored Procedures\spSE_UpdateDefectiveReturnHBNKPI.sql" />
+  </ItemGroup>
+</Project>

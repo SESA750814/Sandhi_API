@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[Cooling_Logs] (
+    [Id]                    NVARCHAR (450) NOT NULL,
+    [INV_ID]                NVARCHAR (MAX) NULL,
+    [SUPPLY_INV_ID]         NVARCHAR (MAX) NULL,
+    [CSS_ID]                NVARCHAR (MAX) NULL,
+    [Month_Name]            NVARCHAR (MAX) NULL,
+    [INV_TYPE]              NVARCHAR (MAX) NULL,
+    [WO_BUSINESSUNIT]       NVARCHAR (MAX) NULL,
+    [WO_AMT]                NVARCHAR (MAX) NULL,
+    [WO_COUNT]              NVARCHAR (MAX) NULL,
+    [PRF_NO]                NVARCHAR (MAX) NULL,
+    [PRF_Gen_Date]          NVARCHAR (MAX) NULL,
+    [Status_Type]           NVARCHAR (MAX) NULL,
+    [WorkOrder_Status_Type] NVARCHAR (MAX) NULL,
+    [WOIds]                 NVARCHAR (MAX) NULL,
+    [Base_Payout]           NVARCHAR (MAX) NULL,
+    [INCENTIVE_AMT]         NVARCHAR (MAX) NULL,
+    [Inv_Amt]               NVARCHAR (MAX) NULL,
+    [Tax_Amt]               NVARCHAR (MAX) NULL,
+    [INC_TAX_AMT]           NVARCHAR (MAX) NULL,
+    [po_id]                 NVARCHAR (MAX) NULL,
+    [Updated_User]          NVARCHAR (MAX) NULL,
+    [Updated_Date]          NVARCHAR (MAX) NULL,
+    [Remarks]               NVARCHAR (MAX) NULL,
+    CONSTRAINT [PK_Cooling_Logs] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
