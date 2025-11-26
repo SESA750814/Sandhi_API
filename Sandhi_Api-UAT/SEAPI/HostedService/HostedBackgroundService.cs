@@ -32,7 +32,7 @@ namespace SE.API.HostedService
                 _logger.LogInformation("start at: {time}", DateTime.Now.ToString("HH:mm:ss"));
 
                 await ResendFailedCollectorEmailsAsync(stoppingToken);
-                await EscaltionEmailAlertAsync(stoppingToken);
+                await EscalationEmailAlertAsync(stoppingToken);
 
                 // Start timers for periodic execution
                 var hourlyTask = RunHourlyTaskAsync(stoppingToken);
@@ -63,7 +63,7 @@ namespace SE.API.HostedService
                 _logger.LogInformation("EscalationEmailAlertAsync Next scheduled at: {time}", nextRun.ToString("yyyy-MM-dd HH:mm:ss"));
 
                 await Task.Delay(delay, stoppingToken);
-                await EscaltionEmailAlertAsync(stoppingToken);
+                await EscalationEmailAlertAsync(stoppingToken);
 
             }
         }
@@ -91,12 +91,12 @@ namespace SE.API.HostedService
             }
         }
 
-        private async Task EscaltionEmailAlertAsync(CancellationToken cancellationToken)
+        private async Task EscalationEmailAlertAsync(CancellationToken cancellationToken)
         {
             bool IsTATEscalationEmailSend = _config.GetSection("newEnhancement").GetValue<bool>("IsTATEscalationEmailSend");
             if (IsTATEscalationEmailSend)
             {
-                _logger.LogInformation("!!!!EscaltionEmailAlertAsync Feature flage is true and start!!!!!!");
+                _logger.LogInformation("!!!!EscalationEmailAlertAsync Feature flage is true and start!!!!!!");
 
                 using var scope = _scopeFactory.CreateScope();
                 var repository = scope.ServiceProvider.GetRequiredService<IWorkOrderRepository>();
@@ -113,26 +113,25 @@ namespace SE.API.HostedService
                     }
                 });
 
-                //var task2 = Task.Run(async () =>
-                //{
-                //    try
-                //    {
-                //        await repository.CheckAndSendOverdueEmails_Invoice(cancellationToken, _config, _logger);
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        _logger.LogError(ex, "Error in CheckAndSendOverdueEmails_Invoice");
-                //    }
-                //});
+                var task2 = Task.Run(async () =>
+                {
+                    try
+                    {
+                        await repository.CheckAndSendOverdueEmails_Invoice(cancellationToken, _config, _logger);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Error in CheckAndSendOverdueEmails_Invoice");
+                    }
+                });
 
-                await Task.WhenAll(task1);
+                await Task.WhenAll(task1, task2);
             }
             else
             {
-                _logger.LogInformation("!!!!EscaltionEmailAlertAsync Feature flage is False!!!!!!");
+                _logger.LogInformation("!!!!EscalationEmailAlertAsync Feature flage is False!!!!!!");
 
             }
         }
-
     }
 }

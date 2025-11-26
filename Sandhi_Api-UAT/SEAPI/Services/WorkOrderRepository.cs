@@ -891,7 +891,7 @@ namespace SE.API.Services
                                 CheckThresold70AmountAndSendEmail(matchingPO, workOrderStatusParameter.BusinessUnit, _config, _logger, css);
                             }
 
-                            
+
                         }
                         else if (workOrderStatusParameter.BusinessUnit.ToLower() == BussinessUnit.HBN)
                         {
@@ -1054,7 +1054,7 @@ namespace SE.API.Services
             }
         }
 
-        public void CheckThresold70AmountAndSendEmail(PurchaseOrder purchaseOrder,string bussinessUnit,IConfiguration _config, ILogger _logger, CSS css,bool islabour = false)
+        public void CheckThresold70AmountAndSendEmail(PurchaseOrder purchaseOrder, string bussinessUnit, IConfiguration _config, ILogger _logger, CSS css, bool islabour = false)
         {
             var IsPOThresoldEmailSend = _config.GetSection("newEnhancement").GetValue<bool>("IsPOThresoldEmailSend");
 
@@ -1110,7 +1110,7 @@ namespace SE.API.Services
             }
         }
 
-        public bool SendPOThresoldEmail(PurchaseOrder purchaseOrder, string bussinessUnit,bool islabour, int thresoldPercentage, ILogger _logger, IConfiguration _config, CSS css)
+        public bool SendPOThresoldEmail(PurchaseOrder purchaseOrder, string bussinessUnit, bool islabour, int thresoldPercentage, ILogger _logger, IConfiguration _config, CSS css)
         {
             List<Invoice> lstInvoice = new List<Invoice>();
             try
@@ -1123,7 +1123,7 @@ namespace SE.API.Services
                 var toEmail = string.Concat(_config.GetSection("POEmailSetting").GetValue<string>("POThresoldToEmail"));
                 if (bussinessUnit.ToLower() == "cooling")
                 {
-                    if(islabour)
+                    if (islabour)
                     {
                         body = $"<strong>Usage Alert For Cooling Labour PO:</strong><br/><br/>" +
                           $"- AMC Remaining Amount: <strong>₹{purchaseOrder.AVAILABLE_LABOR_AMC_AMT}</strong> out of the Actual <strong>₹{purchaseOrder.LABOR_AMC_AMT}</strong>. " +
@@ -1158,8 +1158,8 @@ namespace SE.API.Services
                           $"Usage has reached the threshold of {thresoldPercentage}%.<br/><br/>" +
                           $"Please take necessary action as one or both amounts have exceeded the defined usage threshold.";
                 }
-               
-                Email.SendEmail(_config,_logger, emailSubject, body,toEmail: toEmail, ccEmail: ccEmail);
+
+                Email.SendEmail(_config, _logger, emailSubject, body, toEmail: toEmail, ccEmail: ccEmail);
                 _logger.LogInformation($"Email Sent successfully for central user for PO thresold");
                 return true;
             }
@@ -1339,18 +1339,18 @@ namespace SE.API.Services
             try
             {
                 IExcelImportRepository excelImport = new ExcelImportRepository(_context);
-                bool isuAtoDitanceRun = Convert.ToBoolean( config["newEnhancement:IsAutoDistanceRun"]);
-                if (tableName.Equals("RAW_DUMP_Expense") && isuAtoDitanceRun) 
+                bool isuAtoDitanceRun = Convert.ToBoolean(config["newEnhancement:IsAutoDistanceRun"]);
+                if (tableName.Equals("RAW_DUMP_Expense") && isuAtoDitanceRun)
                 {
                     _logger.LogInformation("New Enhancement Auto Distance Run!!!!!");
-                    return excelImport.RawDumpImportFile(fileName, tableName, config, _logger);    
+                    return excelImport.RawDumpImportFile(fileName, tableName, config, _logger);
                 }
                 else
                 {
                     _logger.LogInformation("Old Distance Run!!!!!");
                     return excelImport.ImportFile(fileName, tableName, config, _logger);
                 }
-               
+
 
             }
             catch (Exception exception)
@@ -1490,8 +1490,8 @@ namespace SE.API.Services
                 collection = collection.Include(u => u.PurchaseOrder);
                 //collection = collection.Include(u => u.WorkOrders
 
-                    //collection = collection.Include(u => u.WorkOrders)
-                    //           .ThenInclude(wo => wo.WorkOrderStatuses);
+                //collection = collection.Include(u => u.WorkOrders)
+                //           .ThenInclude(wo => wo.WorkOrderStatuses);
 
                 if (userType == (int)UserType.FinanceUser)
                 {
@@ -3010,7 +3010,7 @@ namespace SE.API.Services
                 CSS result = _context.SE_CSS_Master.Where(u => u.Id == currentParams.CSSIds).FirstOrDefault();
                 if (result != null)
                 {
-                    result.Zip_Code=currentParams.Zip_Code;
+                    result.Zip_Code = currentParams.Zip_Code;
                     result.Base_Payout_Percentage = currentParams.Base_Payout_Percentage;
                     result.Incentive_Percentage = currentParams.Incentive_Percentage;
                     _context.Update(result);
@@ -3088,7 +3088,7 @@ namespace SE.API.Services
             try
             {
                 var collection = _context.SE_Work_Order as IQueryable<WorkOrder>;
-                
+
                 if (filter.WorkOrder_Status != null && filter.WorkOrder_Status >= 0)
                 {
                     collection = collection.Where(u => u.WO_Process_Status == filter.WorkOrder_Status);
@@ -3121,7 +3121,7 @@ namespace SE.API.Services
                 var collection = _context.SE_CSS_Invoice as IQueryable<Invoice>;
                 if (!string.IsNullOrEmpty(filter.PRF_Invoice_No))
                 {
-                    collection = collection.Where(u => u.PRF_No.Contains(filter.PRF_Invoice_No) || u.Inv_No.Contains(filter.PRF_Invoice_No)) ;
+                    collection = collection.Where(u => u.PRF_No.Contains(filter.PRF_Invoice_No) || u.Inv_No.Contains(filter.PRF_Invoice_No));
                 }
                 if (!string.IsNullOrEmpty(filter.Invoice_Type))
                 {
@@ -3197,9 +3197,9 @@ namespace SE.API.Services
         {
             return new Dictionary<int, Action<List<WorkOrder>>>
                    {
-                       { (int)StatusType.CSS_MGR_Approved, (workOrders) => 
+                       { (int)StatusType.CSS_MGR_Approved, (workOrders) =>
                        InvoiceToCssApprove(workOrders) },
-                       { (int)StatusType.CSS_Approved, (workOrders) => 
+                       { (int)StatusType.CSS_Approved, (workOrders) =>
                        InvoiceToCentral(workOrders ) }
                    };
         }
@@ -3244,10 +3244,10 @@ namespace SE.API.Services
                 bool isWorkOrderStatus = workOrderStatuses.Contains(revertInvoiceStatus.To_Status ?? 0);
 
                 var existingInvoice = isInvoiceRevert ? _context.SE_CSS_Invoice.FirstOrDefault(x => x.Id == revertInvoiceStatus.Inv_Id) : new Invoice();
-                var existingInvoiceStatus = isInvoiceRevert ?  _context.SE_CSS_Invoice_Status.Where(x => x.Inv_Id == revertInvoiceStatus.Inv_Id).ToList() : new List<InvoiceStatus>();
+                var existingInvoiceStatus = isInvoiceRevert ? _context.SE_CSS_Invoice_Status.Where(x => x.Inv_Id == revertInvoiceStatus.Inv_Id).ToList() : new List<InvoiceStatus>();
                 var invoice_detail = isInvoiceRevert && isWorkOrderStatus ? _context.SE_CSS_Invoice_Detail.Where(x => x.INV_ID == revertInvoiceStatus.Inv_Id).ToList() : new List<InvoiceDetail>();
 
-                var work_orders = isInvoiceRevert && isWorkOrderStatus 
+                var work_orders = isInvoiceRevert && isWorkOrderStatus
                     ? _context.SE_Work_Order.Where(x => x.INV_ID == revertInvoiceStatus.Inv_Id || x.SUPPLY_INV_ID == revertInvoiceStatus.Inv_Id).Include(x => x.WorkOrderStatuses).ToList()
                     : (isWorkOrderRevert ? _context.SE_Work_Order.Where(x => revertInvoiceStatus.WorkOrderId.Contains(x.Id)).Include(x => x.WorkOrderStatuses).ToList() : new List<WorkOrder>());
 
@@ -3309,17 +3309,17 @@ namespace SE.API.Services
                             Remarks = $"Reverting Status From {Enum.GetName(typeof(StatusType), revertInvoiceStatus.From_Status)}({revertInvoiceStatus.From_Status}) To {Enum.GetName(typeof(StatusType), revertInvoiceStatus.To_Status)}({revertInvoiceStatus.To_Status})."
                         });
                     }
-                    
+
                     await _context.SE_Work_Order_Status.AddRangeAsync(Reverting_Wo_status);
                     _context.SE_Work_Order.UpdateRange(work_orders);
 
-                    if(isInvoiceRevert)
+                    if (isInvoiceRevert)
                     {
                         _context.SE_CSS_Invoice_Status.RemoveRange(existingInvoiceStatus);
                         _context.SE_CSS_Invoice_Detail.RemoveRange(invoice_detail);
                         _context.SE_CSS_Invoice.Remove(existingInvoice);
                     }
-                  
+
                     await _context.SaveChangesAsync();
                 }
 
@@ -3355,34 +3355,34 @@ namespace SE.API.Services
 
         public void InvoiceToCssApprove(List<WorkOrder> work_orders)
         {
-              foreach (var workOrder in work_orders)
-              {
-                  var current_WO_Status = workOrder.WorkOrderStatuses.OrderBy(x => x.Updated_Date).ToList();
-                  var lastStatus = current_WO_Status.LastOrDefault();
-                  var secondLastStatus = current_WO_Status.Count >= 2 ? current_WO_Status[^2] : null;
-                  if (secondLastStatus.Status_Type != (int)StatusType.CSS_MGR_Approved)
-                  {
-                      workOrder.Claim = secondLastStatus.Wo_Amt == null || secondLastStatus.Wo_Amt <= 0 ? workOrder.Claim : secondLastStatus.Wo_Amt;
-                      workOrder.LABOUR_COST = secondLastStatus.LABOUR_COST == null || secondLastStatus.LABOUR_COST <= 0 ? workOrder.LABOUR_COST : secondLastStatus.LABOUR_COST;
-                      workOrder.SUPPLY_COST = secondLastStatus.SUPPLY_COST == null || secondLastStatus.SUPPLY_COST <= 0 ? workOrder.SUPPLY_COST : secondLastStatus.SUPPLY_COST;
-                  }
+            foreach (var workOrder in work_orders)
+            {
+                var current_WO_Status = workOrder.WorkOrderStatuses.OrderBy(x => x.Updated_Date).ToList();
+                var lastStatus = current_WO_Status.LastOrDefault();
+                var secondLastStatus = current_WO_Status.Count >= 2 ? current_WO_Status[^2] : null;
+                if (secondLastStatus.Status_Type != (int)StatusType.CSS_MGR_Approved)
+                {
+                    workOrder.Claim = secondLastStatus.Wo_Amt == null || secondLastStatus.Wo_Amt <= 0 ? workOrder.Claim : secondLastStatus.Wo_Amt;
+                    workOrder.LABOUR_COST = secondLastStatus.LABOUR_COST == null || secondLastStatus.LABOUR_COST <= 0 ? workOrder.LABOUR_COST : secondLastStatus.LABOUR_COST;
+                    workOrder.SUPPLY_COST = secondLastStatus.SUPPLY_COST == null || secondLastStatus.SUPPLY_COST <= 0 ? workOrder.SUPPLY_COST : secondLastStatus.SUPPLY_COST;
+                }
 
-                  workOrder.CSS_Mgr_Cost = null;
-                  workOrder.CSS_Mgr_LABOUR_COST = null;
-                  workOrder.CSS_Mgr_SUPPLY_COST = null;
-                  workOrder.CSS_Mgr_Status = null;
-                  workOrder.CSS_Mgr_UpdatedDate = null;
-                  workOrder.CSS_Mgr_User = null;
-                  workOrder.CSS_Mgr_Remark = null;
-                  workOrder.CSS_Mgr_Reason = null;
-                  workOrder.CSS_Mgr_Attachment = null;
-                  workOrder.CSS_Mgr_Reason_Desc = null;
-                  workOrder.WO_Process_Status = secondLastStatus.Status_Type;
-                  workOrder.INV_ID = null;
-                  workOrder.SUPPLY_INV_ID = null;
+                workOrder.CSS_Mgr_Cost = null;
+                workOrder.CSS_Mgr_LABOUR_COST = null;
+                workOrder.CSS_Mgr_SUPPLY_COST = null;
+                workOrder.CSS_Mgr_Status = null;
+                workOrder.CSS_Mgr_UpdatedDate = null;
+                workOrder.CSS_Mgr_User = null;
+                workOrder.CSS_Mgr_Remark = null;
+                workOrder.CSS_Mgr_Reason = null;
+                workOrder.CSS_Mgr_Attachment = null;
+                workOrder.CSS_Mgr_Reason_Desc = null;
+                workOrder.WO_Process_Status = secondLastStatus.Status_Type;
+                workOrder.INV_ID = null;
+                workOrder.SUPPLY_INV_ID = null;
             }
         }
-       
+
         public IEnumerable<HBN_Rate_Card> GetHBNRateCard()
         {
             try
@@ -3697,9 +3697,34 @@ namespace SE.API.Services
             {
                 var data = order.First();
                 var master = data.CSS;
-                string body = $"Dear User,\r\n We hope this message finds you well.\r\n This is a reminder that you have pending tasks assigned to you that have exceeded the defined Turnaround Time (TAT) for the month of [{data.Month_Name}].\r\n" +
-                    $"Please review and complete these tasks at the earliest to ensure smooth workflow and avoid escalation.\r\n" +
-                    $"If you believe this notification is incorrect or if the tasks have already been completed,Please ignore.";
+                string cssDetails = string.Empty;
+
+                if (data.CSS_Mgr_UpdatedDate == null && (today - data.CSS_UpdatedDate)?.Days > master.CSS_Manager_TAT)
+                {
+                    cssDetails = $"<p><b>CSS Code:</b> {data.CSS.CSS_Code ?? string.Empty}<br/>" +
+                                 $"<b>CSS Name:</b> {data.CSS.CSS_Name_as_per_Oracle_SAP ?? string.Empty}</p>";
+                }
+
+                string body = $@"<p>Dear User,</p>
+
+                                <p>We hope this message finds you well.</p>
+
+                                <p>
+                                This is a reminder that you have pending tasks assigned to you
+                                that have exceeded the defined Turnaround Time (TAT) for the month of
+                                <b>[{data.Month_Name}]</b>.
+                                </p>{cssDetails}
+                                <p>
+                                Please review and complete these tasks at the earliest to ensure a smooth workflow
+                                and avoid escalation.
+                                </p>
+
+                                <p>
+                                If you believe this notification is incorrect or if the tasks have already been completed,
+                                please ignore this message.
+                                </p>
+
+                                <p>Regards,<br/>Team Sandhi</p>";
 
                 if (data.Central_UpdatedDate == null && (today - data.Loaded_Date).Days > master.Central_TAT)
                 {
@@ -3708,7 +3733,7 @@ namespace SE.API.Services
 
                 if (data.CSS_UpdatedDate == null && (today - data.Central_UpdatedDate)?.Days > master.CSS_TAT)
                 {
-                    string cssEmail = GetCCEmail(data.Central_UpdatedDate ?? DateTime.Now,  master, StatusType.CSS_Approved, master.Central_TAT);
+                    string cssEmail = GetCCEmail(data.Central_UpdatedDate ?? DateTime.Now, master, StatusType.CSS_Approved, master.Central_TAT);
                     await Email.SendEmailAsync(_config, _logger, "Partner Work Overdue", body, toEmail: master.Contact_Person_Email_ID, ccEmail: cssEmail);
                 }
 
@@ -3719,7 +3744,7 @@ namespace SE.API.Services
                 }
             }
         }
-    
+
         private string GetCCEmail(DateTime fromDate, CSS master, StatusType statusType, int TAT)
         {
             var daysSinceAssigned = (DateTime.Now - fromDate).TotalDays;
@@ -3746,7 +3771,7 @@ namespace SE.API.Services
 
         private string GetEmailByStatusLevel1(CSS master, StatusType statusType)
         {
-           
+
             string email = statusType switch
             {
                 StatusType.CSS_Approved => master.Email_ID,
@@ -3764,11 +3789,11 @@ namespace SE.API.Services
         {
             return statusType switch
             {
-                StatusType.CSS_Approved => FilterValidEmails(master.Email_ID, master.CSS_Manager_Email_ID ),
-                StatusType.CSS_MGR_Approved => FilterValidEmails(master.CSS_Manager_Email_ID, master.Css_Manager_Manager_Email ),
-                StatusType.Invoice_Raised => FilterValidEmails(master.Email_ID, master.CSS_Manager_Email_ID ),
-                StatusType.Invoice_Validated => FilterValidEmails(master.Finance_Claim_Data_Validator, master.Finance_Head_Email_ID ),
-                StatusType.GRN_Raised => FilterValidEmails(master.GRN_Creater_Email_ID, master.GRN_Manager_Email ),
+                StatusType.CSS_Approved => FilterValidEmails(master.Email_ID, master.CSS_Manager_Email_ID),
+                StatusType.CSS_MGR_Approved => FilterValidEmails(master.CSS_Manager_Email_ID, master.Css_Manager_Manager_Email),
+                StatusType.Invoice_Raised => FilterValidEmails(master.Email_ID, master.CSS_Manager_Email_ID),
+                StatusType.Invoice_Validated => FilterValidEmails(master.Finance_Claim_Data_Validator, master.Finance_Head_Email_ID),
+                StatusType.GRN_Raised => FilterValidEmails(master.GRN_Creater_Email_ID, master.GRN_Manager_Email),
                 _ => Enumerable.Empty<string>()
             };
         }
@@ -3778,8 +3803,8 @@ namespace SE.API.Services
             return statusType switch
             {
                 StatusType.CSS_Approved => FilterValidEmails(master.Email_ID, master.CSS_Manager_Email_ID, master.Css_Manager_Manager_Email),
-                StatusType.CSS_MGR_Approved => FilterValidEmails(master.CSS_Manager_Email_ID, master.Css_Manager_Manager_Email, "central@se.com" ),
-                StatusType.Invoice_Raised => FilterValidEmails(master.Email_ID, master.CSS_Manager_Email_ID, master.Css_Manager_Manager_Email ),
+                StatusType.CSS_MGR_Approved => FilterValidEmails(master.CSS_Manager_Email_ID, master.Css_Manager_Manager_Email, "central@se.com"),
+                StatusType.Invoice_Raised => FilterValidEmails(master.Email_ID, master.CSS_Manager_Email_ID, master.Css_Manager_Manager_Email),
                 StatusType.Invoice_Validated => FilterValidEmails(master.Finance_Claim_Data_Validator, master.Finance_Head_Email_ID, master.CSS_Manager_Email_ID),
                 StatusType.GRN_Raised => FilterValidEmails(master.GRN_Creater_Email_ID, master.GRN_Manager_Email, "central@se.com"),
                 _ => Enumerable.Empty<string>()
@@ -3804,7 +3829,7 @@ namespace SE.API.Services
                     (w.INV_PAID_DATE == null && EF.Functions.DateDiffDay(w.GRN_GEN_DATE, today) > w.CSS.Central_TAT)).ToListAsync(cancellationToken);
 
             var groupedByCssId = overdueWorkOrders
-                .GroupBy(x => x.CSS_Id) 
+                .GroupBy(x => x.CSS_Id)
                 .ToList();
 
             foreach (var order in groupedByCssId)
@@ -3812,9 +3837,29 @@ namespace SE.API.Services
                 var data = order.First();
                 var master = data.CSS;
 
-                string body = $"Dear User,\r\n We hope this message finds you well.\r\n This is a reminder that you have pending tasks assigned to you that have exceeded the defined Turnaround Time (TAT) for the month of [{data.Month_Name}].\r\n" +
-                     $"Please review and complete these tasks at the earliest to ensure smooth workflow and avoid escalation.\r\n" +
-                     $"If you believe this notification is incorrect or if the tasks have already been completed,Please ignore.";
+                string body = $@"<p>Dear User,</p>
+
+                                <p>We hope this message finds you well.</p>
+
+                                <p>
+                                This is a reminder that you have pending tasks assigned to you that have exceeded 
+                                the defined Turnaround Time (TAT) for the month of <b>[{data.Month_Name}]</b>.
+                                </p>
+
+                                <p>
+                                Please review and complete these tasks at the earliest to ensure smooth workflow 
+                                and avoid escalation.
+                                </p>
+
+                                <p>
+                                If you believe this notification is incorrect or if the tasks have already been completed, 
+                                please ignore.
+                                </p>
+
+                                <br/>
+
+                                <p>Regards,<br/>Team Sandhi</p>";
+
                 if (data.INV_GEN_DATE == null && (today - data.Created_Date).Days > master.CSS_TAT)
                 {
                     string cssEmail = GetCCEmail(data.INV_GEN_DATE ?? DateTime.Now, master, StatusType.Invoice_Raised, master.CSS_TAT);
@@ -4618,140 +4663,144 @@ namespace SE.API.Services
         {
             try
             {
-                var invoices = await _context.SE_CSS_Invoice.Where(i => i.CSS_Id == cssId).ToListAsync();
-
-                // Get work orders for this CSS and count distinct months
-                var workOrders = await _context.SE_Work_Order.Where(wo => wo.CSS_Id == cssId).Select(wo => new { wo.Month_Name }).Distinct().ToListAsync();
-                // Parse month names and find the earliest month
-                var monthDates = workOrders.Select(wo =>
-                {
-                    if (DateTime.TryParse(wo.Month_Name, out var parsedDate))
-                        return parsedDate;
-                    return (DateTime?)null;
-                })
-                                           .Where(d => d.HasValue)
-                                           .Select(d => d.Value)
-                                           .OrderBy(d => d)
-                                           .ToList();
-
-                int expectedTotal = 0;
-                int invoicesPerMonth = 1;
                 DateTime? actualFromDate = null;
                 DateTime? actualToDate = null;
 
-                if (!string.IsNullOrEmpty(businessUnit) &&
-                    businessUnit.Equals("Cooling", StringComparison.OrdinalIgnoreCase))
+                var invoices = await _context.SE_CSS_Invoice
+                    .Where(i => i.CSS_Id == cssId)
+                    .Select(i => new { i.Inv_Date, i.Status_Type, i.INV_PAID_DATE, i.Month_Name, i.Inv_No })
+                    .AsNoTracking()
+                    .ToListAsync();
+
+                var workOrders = await _context.SE_Work_Order
+                                    .Where(wo => wo.CSS_Id == cssId)
+                                    .Select(wo => new { wo.Month_Name })
+                                    .Distinct()
+                                    .AsNoTracking()
+                                    .ToListAsync();
+
+                var monthDates = workOrders.Select(wo =>
                 {
-                    invoicesPerMonth = 2;
-                }
-                string format = "dd-MM-yyyy";
-                CultureInfo provider = CultureInfo.InvariantCulture;
+                    if (DateTime.TryParse(wo.Month_Name, out var parsedDate))
+                    {
+                        return parsedDate;
+                    }
+                    return (DateTime?)null;
+                })
+                .Where(d => d.HasValue)
+                .Select(d => d.Value)
+                .OrderBy(d => d)
+                .ToList();
 
-
-                if (monthDates.Any())
+                if (monthDates.Any() && !isMonthSelected)
                 {
-                    // Get the earliest and latest month from work orders
-                    DateTime earliestMonth, latestMonth;
-                    if (!isMonthSelected)
-                    {
-                        earliestMonth = monthDates.First();
-                        latestMonth = monthDates.Last();
-                    }
-                    else
-                    {
-                        var filteredMonths = monthDates.
-                         Where(d => d >= fromDate)
-                     .Select(d => d)
-                         .ToList();
-                        earliestMonth = filteredMonths.First();
-                        latestMonth = filteredMonths.Last();
-                    }
-
                     DateTime currentMonth = DateTime.Now;
-                    int months = (currentMonth.Year - earliestMonth.Year) * 12 +
-                                (currentMonth.Month - earliestMonth.Month);
 
-                    expectedTotal = months * invoicesPerMonth;
-
-                    // Set actual date range from work orders
-                    actualFromDate = earliestMonth;
-                    actualToDate = new DateTime(currentMonth.Year, currentMonth.Month, 1)
-                        .AddMonths(-1); // Previous month
+                    actualFromDate = monthDates.First();
+                    actualToDate = new DateTime(currentMonth.Year, currentMonth.Month, 1).AddMonths(-1);
                 }
                 else
                 {
-                    // Fallback to original calculation if no work orders found
-                    int months = (toDate.Year - fromDate.Year) * 12 +
-                                (toDate.Month - fromDate.Month) + 1;
-                    expectedTotal = months * invoicesPerMonth;
                     actualFromDate = fromDate;
                     actualToDate = toDate;
                 }
 
-                // Filter invoices by month name first if date range is provided
-                var filteredInvoices = invoices;
-                if (actualFromDate.HasValue && actualToDate.HasValue && isMonthSelected)
-                {
-                    filteredInvoices = invoices.Where(i =>
+                var filteredInvoices = invoices.Where(i =>
                     {
-                        if (string.IsNullOrEmpty(i.Month_Name)) return false;
+                        if (string.IsNullOrEmpty(i.Month_Name))
+                        {
+                            return false;
+                        }
+
                         if (DateTime.TryParse(i.Month_Name, out var monthDate))
                         {
-                            return monthDate >= fromDate && monthDate <= toDate;
+                            return monthDate >= actualFromDate && monthDate <= actualToDate;
                         }
+
                         return false;
                     }).ToList();
+
+                var filteredWorkOrders = workOrders.Where(i =>
+                    {
+                        if (string.IsNullOrEmpty(i.Month_Name))
+                        {
+                            return false;
+                        }
+
+                        if (DateTime.TryParse(i.Month_Name, out var monthDate))
+                        {
+                            return monthDate >= actualFromDate && monthDate <= actualToDate;
+                        }
+
+                        return false;
+                    }).ToList();
+
+                var expectedTotal = filteredWorkOrders.Count();
+
+                if (!string.IsNullOrEmpty(businessUnit) && businessUnit.Equals("Cooling", StringComparison.OrdinalIgnoreCase))
+                {
+                    expectedTotal *= 2;
                 }
 
-                var actualReceived = actualFromDate.HasValue && actualToDate.HasValue
-                    ? filteredInvoices.Count(i => i.Status_Type >= (int)StatusType.PRF_Raised)
-                    : invoices.Count(i => i.Status_Type >= (int)StatusType.PRF_Raised);
+                var actualReceived = filteredInvoices.Count(i => i.Status_Type >= (int)StatusType.PRF_Raised);
 
-                var paymentCleared = actualFromDate.HasValue && actualToDate.HasValue
-                    ? filteredInvoices.Count(i => i.Status_Type == (int)StatusType.Invoice_Paid)
-                    : invoices.Count(i => i.Status_Type == (int)StatusType.Invoice_Paid);
+                var paymentCleared = filteredInvoices.Count(i => i.Status_Type == (int)StatusType.Invoice_Paid);
 
-                var pendingInvoices = actualFromDate.HasValue && actualToDate.HasValue
-                    ? filteredInvoices.Count(i => i.Status_Type == (int)StatusType.PRF_Raised
-                        || i.Status_Type == (int)StatusType.PO_Waiting)
-                    : invoices.Count(i => i.Status_Type == (int)StatusType.PRF_Raised
-                        || i.Status_Type == (int)StatusType.PO_Waiting);
+                var pendingInvoices = expectedTotal - actualReceived;
 
                 double pctReceived = expectedTotal == 0 ? 0 : Math.Round((double)actualReceived / expectedTotal * 100);
                 double pctCleared = actualReceived == 0 ? 0 : Math.Round((double)paymentCleared / expectedTotal * 100);
                 double pctPending = expectedTotal == 0 ? 0 : Math.Round((double)pendingInvoices / expectedTotal * 100);
 
-                var clearedMonthly = actualFromDate.HasValue && actualToDate.HasValue ? invoices.Where(i => i.Status_Type == (int)StatusType.Invoice_Paid && i.INV_PAID_DATE.HasValue && i.INV_PAID_DATE.Value >= actualFromDate.Value)
-                                    .GroupBy(i => new { i.INV_PAID_DATE.Value.Year, i.INV_PAID_DATE.Value.Month })
-                                    .Select(g => new { year = g.Key.Year, month = g.Key.Month, cleared = g.Count() })
-                                    : invoices.Where(i => i.Status_Type == (int)StatusType.Invoice_Paid && i.INV_PAID_DATE.HasValue)
-                                    .GroupBy(i => new { i.INV_PAID_DATE.Value.Year, i.INV_PAID_DATE.Value.Month })
+                var clearedMonthly = invoices
+                                    .Where(i => i.Status_Type == (int)StatusType.Invoice_Paid && i.INV_PAID_DATE.HasValue)
+                                    .AsEnumerable()
+                                    .Select(i => new
+                                    {
+                                        Invoice = i,
+                                        ParsedDate = DateTime.TryParseExact(i.Month_Name, "MMMM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date) ? date : (DateTime?)null
+                                    })
+                                    .Where(x => x.ParsedDate.HasValue)
+                                    .GroupBy(x => new { x.ParsedDate.Value.Year, x.ParsedDate.Value.Month })
                                     .Select(g => new { year = g.Key.Year, month = g.Key.Month, cleared = g.Count() });
 
-                var pendingMonthly = actualFromDate.HasValue && actualToDate.HasValue ? invoices.Where(i => (i.Status_Type >= (int)StatusType.Invoice_Raised) && i.Status_Type <= (int)StatusType.Invoice_Paid && i.Inv_Date.HasValue && i.Inv_Date.Value >= actualFromDate.Value && i.Inv_Date.Value <= actualToDate.Value)
-                                    .GroupBy(i => new { i.Inv_Date.Value.Year, i.Inv_Date.Value.Month })
-                                    .Select(g => new { year = g.Key.Year, month = g.Key.Month, pending = g.Count() })
-                                    : invoices.Where(i => (i.Status_Type >= (int)StatusType.Invoice_Raised) && i.Status_Type <= (int)StatusType.Invoice_Paid && i.Inv_Date.HasValue)
-                                    .GroupBy(i => new { i.Inv_Date.Value.Year, i.Inv_Date.Value.Month })
+                var pendingMonthly = invoices
+                                    .Where(i => i.Status_Type >= (int)StatusType.Invoice_Raised && i.Status_Type <= (int)StatusType.Invoice_Paid && i.Inv_Date.HasValue)
+                                    .AsEnumerable()
+                                    .Select(i => new
+                                    {
+                                        Invoice = i,
+                                        ParsedDate = DateTime.TryParseExact(i.Month_Name, "MMMM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date) ? date : (DateTime?)null
+                                    })
+                                    .Where(x => x.ParsedDate.HasValue)
+                                    .GroupBy(x => new { x.ParsedDate.Value.Year, x.ParsedDate.Value.Month })
                                     .Select(g => new { year = g.Key.Year, month = g.Key.Month, pending = g.Count() });
 
                 var allMonths = clearedMonthly.Select(c => new { c.year, c.month, cleared = c.cleared, pending = 0 })
-                                   .Concat(pendingMonthly.Select(p => new { p.year, p.month, cleared = 0, pending = p.pending }))
-                                   .GroupBy(x => new { x.year, x.month })
-                                   .Select(g => new MonthlyData
-                                   {
-                                       Year = g.Key.year,
-                                       Month = g.Key.month,
-                                       Cleared = g.Sum(x => x.cleared),
-                                       PendingInvoices = g.Sum(x => x.pending)
-                                   })
-                                   .OrderBy(x => x.Year)
-                                   .ThenBy(x => x.Month)
-                                   .ToList();
+                    .Concat(pendingMonthly.Select(p => new { p.year, p.month, cleared = 0, pending = p.pending }))
+                    .GroupBy(x => new { x.year, x.month })
+                    .Select(g => new MonthlyData
+                    {
+                        Year = g.Key.year,
+                        Month = g.Key.month,
+                        Cleared = g.Sum(x => x.cleared),
+                        PendingInvoices = g.Sum(x => x.pending)
+                    })
+                    .ToList();
+
+                var existingMonths = allMonths.Select(m => new { m.Year, m.Month }).ToHashSet();
+
+                allMonths.AddRange(
+                    monthDates
+                        .Where(d => !existingMonths.Contains(new { Year = d.Year, Month = d.Month }))
+                        .Select(d => new MonthlyData { Year = d.Year, Month = d.Month, Cleared = 0, PendingInvoices = 0 })
+                );
+
+                allMonths = allMonths.OrderBy(x => x.Year).ThenBy(x => x.Month).ToList();
 
 
                 var pendingInvoiceDetails = filteredInvoices
-                                           .Where(i => i.Status_Type > (int)StatusType.Invoice_Raised && i.Status_Type < (int)StatusType.Invoice_Paid)
+                                           .Where(i => i.Status_Type >= (int)StatusType.Invoice_Raised && i.Status_Type < (int)StatusType.Invoice_Paid)
                                            .Select(i => new InvoiceSummaryDataDetail
                                            {
                                                InvoiceNumber = i.Inv_No,
@@ -5066,8 +5115,8 @@ namespace SE.API.Services
                 {
                     FromDate = actualFromDate?.ToString("yyyy-MM-dd"),
                     ToDate = actualToDate?.ToString("yyyy-MM-dd"),
-                    FromMonth = actualFromDate?.ToString("yyyy-MM"), 
-                    ToMonth = actualToDate?.ToString("yyyy-MM")       
+                    FromMonth = actualFromDate?.ToString("yyyy-MM"),
+                    ToMonth = actualToDate?.ToString("yyyy-MM")
                 };
 
                 return response;

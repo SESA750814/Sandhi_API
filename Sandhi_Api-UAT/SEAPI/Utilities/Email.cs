@@ -10,25 +10,49 @@ namespace SE.API.Utilities
 {
     public static class Email
     {
+        private static (string toEmail, string ccEmail, string bccEmail) GetTestModeEmails(IConfiguration config, string originalToEmail, string originalCcEmail, string originalBccEmail)
+        {
+            var isTestMode = config.GetSection("newEnhancement").GetValue<bool>("IsTestMode");
+            if (!isTestMode)
+            {
+                return (originalToEmail, originalCcEmail, originalBccEmail);
+            }
+
+            return (
+                config.GetSection("newEnhancement").GetValue<string>("TestMailToRecipients") ?? originalToEmail,
+                config.GetSection("newEnhancement").GetValue<string>("TestMailCCRecipients") ?? originalCcEmail,
+                config.GetSection("newEnhancement").GetValue<string>("TestMailBCCRecipients") ?? originalBccEmail
+            );
+        }
+
         public static bool SendEmail(IConfiguration config, ILogger logger, string subject, string body, string toEmail, string ccEmail = "", string bccEmail = "")
         {
             try
-            {
+            {           
                 string fromEmail = config.GetSection("Email").GetValue<String>("From");
                 string emailHost = config.GetSection("Email").GetValue<String>("Host");
                 string userName = config.GetSection("Email").GetValue<String>("UserName");
                 string pwd = config.GetSection("Email").GetValue<String>("Password");
+
                 if (!string.IsNullOrEmpty(config.GetSection("Email").GetValue<String>("Override")))
                 {
                     toEmail = config.GetSection("Email").GetValue<String>("Override");
                 }
-                using (MailMessage mm = new MailMessage(fromEmail, toEmail))
-                {
 
-                    if (ccEmail != "")
-                        mm.CC.Add(ccEmail);
-                    if (bccEmail != "")
-                        mm.Bcc.Add(bccEmail);
+                var (finalToEmail, finalCcEmail, finalBccEmail) = GetTestModeEmails(config, toEmail, ccEmail, bccEmail);
+
+                using (MailMessage mm = new MailMessage(fromEmail, finalToEmail))
+                {
+                    if (!string.IsNullOrEmpty(finalCcEmail))
+                    {
+                        mm.CC.Add(finalCcEmail);
+                    }
+
+                    if (!string.IsNullOrEmpty(finalBccEmail))
+                    {
+                        mm.Bcc.Add(finalBccEmail);
+                    }
+
                     mm.Subject = subject;
                     mm.Body = body;
                     mm.IsBodyHtml = true;
@@ -43,15 +67,14 @@ namespace SE.API.Utilities
                     smtp.Port = 587;
                     smtp.Send(mm);
                 }
-                logger.LogInformation("Mail Sent to:" + toEmail + " with subject" + subject);
+                logger.LogInformation($"Mail Sent to: {finalToEmail} with subject: {subject}");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.LogError("Error in sending email to:" + toEmail + " with subject" + subject + " " + ex.ToString());
-                throw ex;
+                logger.LogError($"Error in sending email to: {toEmail} with subject: {subject} {ex}");
+                throw;
             }
-
         }
 
         public static async Task<bool> SendEmailAsync(IConfiguration config, ILogger logger, string subject, string body, string toEmail, string ccEmail = "", string bccEmail = "")
@@ -62,17 +85,26 @@ namespace SE.API.Utilities
                 string emailHost = config.GetSection("Email").GetValue<String>("Host");
                 string userName = config.GetSection("Email").GetValue<String>("UserName");
                 string pwd = config.GetSection("Email").GetValue<String>("Password");
+
                 if (!string.IsNullOrEmpty(config.GetSection("Email").GetValue<String>("Override")))
                 {
                     toEmail = config.GetSection("Email").GetValue<String>("Override");
                 }
-                using (MailMessage mm = new MailMessage(fromEmail, toEmail))
-                {
 
-                    if (ccEmail != "")
-                        mm.CC.Add(ccEmail);
-                    if (bccEmail != "")
-                        mm.Bcc.Add(bccEmail);
+                var (finalToEmail, finalCcEmail, finalBccEmail) = GetTestModeEmails(config, toEmail, ccEmail, bccEmail);
+
+                using (MailMessage mm = new MailMessage(fromEmail, finalToEmail))
+                {
+                    if (!string.IsNullOrEmpty(finalCcEmail))
+                    {
+                        mm.CC.Add(finalCcEmail);
+                    }
+
+                    if (!string.IsNullOrEmpty(finalBccEmail))
+                    {
+                        mm.Bcc.Add(finalBccEmail);
+                    }
+
                     mm.Subject = subject;
                     mm.Body = body;
                     mm.IsBodyHtml = true;
@@ -87,16 +119,16 @@ namespace SE.API.Utilities
                     smtp.Port = 587;
                     await smtp.SendMailAsync(mm);
                 }
-                logger.LogInformation("Mail Sent to:" + toEmail + " with subject" + subject);
+                logger.LogInformation($"Mail Sent to: {finalToEmail} with subject: {subject}");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.LogError("Error in sending email to:" + toEmail + " with subject" + subject + " " + ex.ToString());
-                throw ex;
+                logger.LogError($"Error in sending email to: {toEmail} with subject: {subject} {ex}");
+                throw;
             }
-
         }
+
         public static bool SendEmail(IConfiguration config, string subject, string body, byte[] pdfBytes, string toEmail, string fileName, string ccEmail = "", string bccEmail = "")
         {
             try
@@ -105,16 +137,26 @@ namespace SE.API.Utilities
                 string emailHost = config.GetSection("Email").GetValue<String>("Host");
                 string userName = config.GetSection("Email").GetValue<String>("UserName");
                 string pwd = config.GetSection("Email").GetValue<String>("Password");
+
                 if (!string.IsNullOrEmpty(config.GetSection("Email").GetValue<String>("Override")))
                 {
                     toEmail = config.GetSection("Email").GetValue<String>("Override");
                 }
-                using (MailMessage mm = new MailMessage(fromEmail, toEmail))
+
+                var (finalToEmail, finalCcEmail, finalBccEmail) = GetTestModeEmails(config, toEmail, ccEmail, bccEmail);
+
+                using (MailMessage mm = new MailMessage(fromEmail, finalToEmail))
                 {
-                    if (ccEmail != "")
-                        mm.CC.Add(ccEmail);
-                    if (bccEmail != "")
-                        mm.Bcc.Add(bccEmail);
+                    if (!string.IsNullOrEmpty(finalCcEmail))
+                    {
+                        mm.CC.Add(finalCcEmail);
+                    }
+
+                    if (!string.IsNullOrEmpty(finalBccEmail))
+                    {
+                        mm.Bcc.Add(finalBccEmail);
+                    }
+
                     mm.Subject = subject;
                     mm.Body = body;
                     mm.IsBodyHtml = true;
@@ -134,10 +176,10 @@ namespace SE.API.Utilities
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
-
         }
+
         public static bool SendEmail(IConfiguration config, string subject, string body, byte[] pdfBytes, string fileName, byte[] pdfBytes2, string fileName2, byte[] excelbytes, string toEmail, string ccEmail = "", string bccEmail = "")
         {
             try
@@ -146,19 +188,30 @@ namespace SE.API.Utilities
                 string emailHost = config.GetSection("Email").GetValue<String>("Host");
                 string userName = config.GetSection("Email").GetValue<String>("UserName");
                 string pwd = config.GetSection("Email").GetValue<String>("Password");
+
                 if (!string.IsNullOrEmpty(config.GetSection("Email").GetValue<String>("Override")))
                 {
                     toEmail = config.GetSection("Email").GetValue<String>("Override");
                 }
-                using (MailMessage mm = new MailMessage(fromEmail, toEmail))
+
+                var (finalToEmail, finalCcEmail, finalBccEmail) = GetTestModeEmails(config, toEmail, ccEmail, bccEmail);
+
+                using (MailMessage mm = new MailMessage(fromEmail, finalToEmail))
                 {
-                    if (ccEmail != "")
-                        mm.CC.Add(ccEmail);
-                    if (bccEmail != "")
-                        mm.Bcc.Add(bccEmail);
+                    if (!string.IsNullOrEmpty(finalCcEmail))
+                    {
+                        mm.CC.Add(finalCcEmail);
+                    }
+
+                    if (!string.IsNullOrEmpty(finalBccEmail))
+                    {
+                        mm.Bcc.Add(finalBccEmail);
+                    }
+
                     mm.Subject = subject;
                     mm.Body = body;
                     mm.IsBodyHtml = true;
+
                     if (pdfBytes != null)
                     {
                         MemoryStream pdfStream = new MemoryStream(pdfBytes);
@@ -177,6 +230,7 @@ namespace SE.API.Utilities
                         Attachment excel = new Attachment(excelStream, fileName + ".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
                         mm.Attachments.Add(excel);
                     }
+
                     SmtpClient smtp = new SmtpClient();
                     smtp.Host = emailHost;
                     smtp.EnableSsl = true;
@@ -190,47 +244,41 @@ namespace SE.API.Utilities
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
-
         }
 
         public static bool EASendEmail(IConfiguration config, ILogger logger, string subject, string body, string toEmail, string ccEmail = "", string bccEmail = "")
         {
             try
             {
-
-
                 string fromEmail = config.GetSection("Email").GetValue<String>("From");
                 string emailHost = config.GetSection("Email").GetValue<String>("Host");
                 string userName = config.GetSection("Email").GetValue<String>("UserName");
                 string pwd = config.GetSection("Email").GetValue<String>("Password");
                 string domain = config.GetSection("Email").GetValue<String>("Domain");
                 string adminEmail = config.GetSection("Email").GetValue<String>("Admin");
+
                 if (!string.IsNullOrEmpty(config.GetSection("Email").GetValue<String>("CC")))
                 {
                     ccEmail = config.GetSection("Email").GetValue<String>("CC");
                 }
                 bccEmail = config.GetSection("Email").GetValue<String>("BCC");
                 toEmail = config.GetSection("Email").GetValue<String>("Override") != "" ? config.GetSection("Email").GetValue<String>("Override") : toEmail;
+
+                var (finalToEmail, finalCcEmail, finalBccEmail) = GetTestModeEmails(config, toEmail, ccEmail, bccEmail);
+
                 if (config.GetSection("Email").GetValue<String>("UseSMTP") == "yes")
                 {
-                    using (MailMessage mm = new MailMessage(fromEmail, toEmail))
+                    using (MailMessage mm = new MailMessage(fromEmail, finalToEmail))
                     {
-                        //if (toEmail.IndexOf(adminEmail) < 0)
-                        //{
-                        //    if (ccEmail != "" || ccEmail != null)
-                        //        mm.CC.Add(ccEmail);
-                        //    if (bccEmail != "" || bccEmail != null)
-                        //        mm.Bcc.Add(bccEmail);
-                        //}
                         mm.Subject = subject;
                         mm.Body = body;
                         mm.IsBodyHtml = true;
 
                         System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                        System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient();
-                        smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                        SmtpClient smtp = new SmtpClient();
+                        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                         smtp.Host = emailHost;
                         smtp.Port = 587;
                         smtp.EnableSsl = true;
@@ -243,17 +291,9 @@ namespace SE.API.Utilities
                 }
                 else
                 {
-
                     EASendMail.SmtpMail oMail = new EASendMail.SmtpMail(config.GetSection("Email").GetValue<String>("LicenseKey"));
                     oMail.From = fromEmail;
-                    oMail.To = toEmail;
-                    //if (toEmail.IndexOf(adminEmail) < 0)
-                    //{
-                    //    if (ccEmail != "" || ccEmail != null)
-                    //        oMail.Cc = ccEmail;
-                    //    if (bccEmail != "" || bccEmail != null)
-                    //        oMail.Bcc = bccEmail;
-                    //}
+                    oMail.To = finalToEmail;
                     oMail.Subject = subject;
                     oMail.HtmlBody = body;
 
@@ -261,29 +301,30 @@ namespace SE.API.Utilities
                     oServer.User = userName;
                     oServer.Password = pwd;
                     oServer.Port = Convert.ToInt32(config.GetSection("Email").GetValue<String>("Port"));
-
                     oServer.ConnectType = EASendMail.SmtpConnectType.ConnectNormal;
                     System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                     EASendMail.SmtpClient oSmtp = new EASendMail.SmtpClient();
                     oSmtp.SendMail(oServer, oMail);
                 }
 
-
                 return true;
             }
             catch (Exception ex)
             {
                 logger.LogError("Send Email " + ex.ToString());
-                throw ex;
+                throw;
             }
-
         }
+
         public static bool IsEmailValid(string emailaddress)
         {
             try
             {
                 if (string.IsNullOrEmpty(emailaddress))
+                {
                     return false;
+                }
+
                 MailAddress m = new MailAddress(emailaddress);
                 return true;
             }
